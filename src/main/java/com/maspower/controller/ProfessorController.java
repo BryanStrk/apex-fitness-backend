@@ -2,6 +2,7 @@ package com.maspower.controller;
 
 import com.maspower.model.Professor;
 import com.maspower.service.ProfessorService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,12 +28,12 @@ public class ProfessorController {
     }
 
     @PostMapping
-    public ResponseEntity<Professor> create(@RequestBody Professor professor) {
+    public ResponseEntity<Professor> create(@Valid @RequestBody Professor professor) {
         return ResponseEntity.status(HttpStatus.CREATED).body(professorService.save(professor));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Professor> update(@PathVariable Long id, @RequestBody Professor professor) {
+    public ResponseEntity<Professor> update(@PathVariable Long id, @Valid @RequestBody Professor professor) {
         return ResponseEntity.ok(professorService.update(id, professor));
     }
 
