@@ -46,4 +46,16 @@ public class ActivityController {
         activityService.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PostMapping("/{activityId}/enroll/{userId}")
+    public ResponseEntity<Activity> enroll(@PathVariable Long activityId, @PathVariable Long userId) {
+        return ResponseEntity.ok(activityService.enrollUser(activityId, userId));
+    }
+
+    @DeleteMapping("/{activityId}/unenroll/{userId}")
+    public ResponseEntity<Activity> unenroll(@PathVariable Long activityId, @PathVariable Long userId) {
+        return ResponseEntity.ok(activityService.unenrollUser(activityId, userId));
+    }
+
+
 }
