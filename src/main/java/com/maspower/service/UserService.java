@@ -1,5 +1,6 @@
 package com.maspower.service;
 
+import com.maspower.exception.ResourceNotFoundException;
 import com.maspower.model.User;
 import com.maspower.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +20,7 @@ public class UserService {
 
     public User findById(Long id) {
         return userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + id));
     }
 
     public User save(User user) {

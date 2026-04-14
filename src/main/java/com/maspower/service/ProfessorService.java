@@ -1,5 +1,6 @@
 package com.maspower.service;
 
+import com.maspower.exception.ResourceNotFoundException;
 import com.maspower.model.Professor;
 import com.maspower.repository.ProfessorRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +20,7 @@ public class ProfessorService {
 
     public Professor findById(Long id) {
         return professorRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Professor not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Professor not found with id: " + id));
     }
 
     public Professor save(Professor professor) {
