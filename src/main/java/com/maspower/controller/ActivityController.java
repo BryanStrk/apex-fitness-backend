@@ -3,6 +3,7 @@ package com.maspower.controller;
 import com.maspower.dto.ActivityMapper;
 import com.maspower.dto.ActivityResponseDTO;
 import com.maspower.service.ActivityService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,13 +39,13 @@ public class ActivityController {
     }
 
     @PostMapping
-    public ResponseEntity<ActivityResponseDTO> create(@RequestBody com.maspower.model.Activity activity) {
+    public ResponseEntity<ActivityResponseDTO> create(@Valid @RequestBody com.maspower.model.Activity activity) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(ActivityMapper.toDTO(activityService.save(activity)));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ActivityResponseDTO> update(@PathVariable Long id, @RequestBody com.maspower.model.Activity activity) {
+    public ResponseEntity<ActivityResponseDTO> update(@PathVariable Long id, @Valid @RequestBody com.maspower.model.Activity activity) {
         return ResponseEntity.ok(ActivityMapper.toDTO(activityService.update(id, activity)));
     }
 
