@@ -8,19 +8,25 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 @Service
 @RequiredArgsConstructor
 public class CloudinaryService {
 
+    private static final Pattern VERSION_PREFIX = Pattern.compile("^v\\d+/");
+    private static final String UPLOAD_SEGMENT = "/upload/";
+
     private final Cloudinary cloudinary;
 
     public String uploadImage(MultipartFile file, String folder) throws IOException {
-        Map uploadResult = cloudinary.uploader().upload(file.getBytes(),
+        Map<String, Object> uploadResult = cloudinary.uploader().upload(
+                file.getBytes(),
                 ObjectUtils.asMap(
                         "folder", folder,
                         "resource_type", "image"
-                ));
+                )
+        );
         return (String) uploadResult.get("secure_url");
     }
 
@@ -29,10 +35,26 @@ public class CloudinaryService {
         cloudinary.uploader().destroy(publicId, ObjectUtils.emptyMap());
     }
 
+    /**
+     * Extrae el public_id de una URL de Cloudinary, manejando carpetas anidadas.
+     *
+     * Ejemplo:
+     *   URL:  https://res.cloudinary.com/dutmn3xde/image/upload/v1776594314/maspower/workouts/hiit_abc.jpg
+     *   Out:  maspower/workouts/hiit_abc
+     */
     private String extractPublicId(String imageUrl) {
-        String[] parts = imageUrl.split("/");
-        String fileWithExtension = parts[parts.length - 1];
-        String folder = parts[parts.length - 2];
-        return folder + "/" + fileWithExtension.split("\\.")[0];
+        int uploadIndex = imageUrl.indexOf(UPLOAD_SEGMENT);
+        if (uploadIndex == -1) {
+            throw new IllegalArgumentException("URL de Cloudinary no válida: " + imageUrl);
+        }
+
+        String path = imageUrl.substring(uploadIndex + UPLOAD_SEGMENT.length());
+
+        // Eliminar prefijo de versión (v1234567890/) si existe
+        path = VERSION_PREFIX.matcher(path).replaceFirst("");
+
+        // Eliminar extensión del archivo
+        int lastDotIndex = path.lastIndexOf('.');
+        return lastDotIndex != -1 ? path.substring(0, lastDotIndex) : path;
     }
 }
