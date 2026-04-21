@@ -1,5 +1,7 @@
 package com.apexfitness.dto;
 
+import com.apexfitness.model.Category;
+import com.apexfitness.model.Intensity;
 import jakarta.validation.constraints.*;
 import java.time.LocalDateTime;
 
@@ -18,6 +20,18 @@ public record ActivityRequestDTO(
         LocalDateTime date,
 
         String imageUrl,
+
+        @NotNull(message = "Category is required")
+        Category category,
+
+        @NotNull(message = "Intensity is required")
+        Intensity intensity,
+
+        @Positive(message = "Duration must be positive")
+        int durationMinutes,
+
+        @PositiveOrZero(message = "Calories estimate must be zero or positive")
+        double caloriesEstimate,
 
         @NotNull(message = "Professor id is required")
         Long professorId

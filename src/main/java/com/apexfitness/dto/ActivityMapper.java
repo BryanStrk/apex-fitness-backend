@@ -17,6 +17,10 @@ public class ActivityMapper {
                 activity.getPrice(),
                 activity.getDate(),
                 activity.getImageUrl(),
+                activity.getCategory(),
+                activity.getIntensity(),
+                activity.getDurationMinutes(),
+                activity.getCaloriesEstimate(),
                 toProfessorSummary(activity.getProfessor()),
                 activity.getUsers().stream()
                         .map(ActivityMapper::toUserSummary)
@@ -32,6 +36,10 @@ public class ActivityMapper {
         activity.setPrice(dto.price());
         activity.setDate(dto.date());
         activity.setImageUrl(dto.imageUrl());
+        activity.setCategory(dto.category());
+        activity.setIntensity(dto.intensity());
+        activity.setDurationMinutes(dto.durationMinutes());
+        activity.setCaloriesEstimate(dto.caloriesEstimate());
         activity.setProfessor(professor);
         return activity;
     }
@@ -43,6 +51,10 @@ public class ActivityMapper {
         existing.setPrice(dto.price());
         existing.setDate(dto.date());
         existing.setImageUrl(dto.imageUrl());
+        existing.setCategory(dto.category());
+        existing.setIntensity(dto.intensity());
+        existing.setDurationMinutes(dto.durationMinutes());
+        existing.setCaloriesEstimate(dto.caloriesEstimate());
         existing.setProfessor(professor);
     }
 
