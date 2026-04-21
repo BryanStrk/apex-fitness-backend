@@ -39,6 +39,28 @@ public class Activity {
     @Column(name = "image_url")
     private String imageUrl;
 
+    // ═══════════════════════════════════════════════════
+    // Campos nuevos para el frontend WorkoutCard
+    // ═══════════════════════════════════════════════════
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Category category;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Intensity intensity;
+
+    @Column(name = "duration_minutes", nullable = false)
+    private int durationMinutes;
+
+    @Column(name = "calories_estimate", nullable = false)
+    private double caloriesEstimate;
+
+    // ═══════════════════════════════════════════════════
+    // Relaciones
+    // ═══════════════════════════════════════════════════
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "professor_id", nullable = false)
     private Professor professor;
