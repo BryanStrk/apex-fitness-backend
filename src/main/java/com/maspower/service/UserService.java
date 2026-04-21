@@ -1,5 +1,7 @@
 package com.maspower.service;
 
+import com.maspower.dto.UserMapper;
+import com.maspower.dto.UserRequestDTO;
 import com.maspower.exception.ResourceNotFoundException;
 import com.maspower.model.User;
 import com.maspower.repository.UserRepository;
@@ -23,18 +25,14 @@ public class UserService {
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + id));
     }
 
-    public User save(User user) {
+    public User save(UserRequestDTO dto) {
+        User user = UserMapper.toEntity(dto);
         return userRepository.save(user);
     }
 
-    public User update(Long id, User user) {
+    public User update(Long id, UserRequestDTO dto) {
         User existing = findById(id);
-        existing.setName(user.getName());
-        existing.setSurname(user.getSurname());
-        existing.setDni(user.getDni());
-        existing.setRegistrationYear(user.getRegistrationYear());
-        existing.setActive(user.isActive());
-        existing.setImageUrl(user.getImageUrl());
+        UserMapper.updateEntity(existing, dto);
         return userRepository.save(existing);
     }
 
