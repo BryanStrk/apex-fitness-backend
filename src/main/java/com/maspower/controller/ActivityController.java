@@ -1,6 +1,7 @@
 package com.maspower.controller;
 
 import com.maspower.dto.ActivityMapper;
+import com.maspower.dto.ActivityRequestDTO;
 import com.maspower.dto.ActivityResponseDTO;
 import com.maspower.service.ActivityService;
 import jakarta.validation.Valid;
@@ -10,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/activities")
@@ -23,14 +23,14 @@ public class ActivityController {
     public ResponseEntity<List<ActivityResponseDTO>> getAll() {
         return ResponseEntity.ok(activityService.findAll().stream()
                 .map(ActivityMapper::toDTO)
-                .collect(Collectors.toList()));
+                .toList());
     }
 
     @GetMapping("/future")
     public ResponseEntity<List<ActivityResponseDTO>> getFuture() {
         return ResponseEntity.ok(activityService.findFutureActivities().stream()
                 .map(ActivityMapper::toDTO)
-                .collect(Collectors.toList()));
+                .toList());
     }
 
     @GetMapping("/{id}")
@@ -39,14 +39,15 @@ public class ActivityController {
     }
 
     @PostMapping
-    public ResponseEntity<ActivityResponseDTO> create(@Valid @RequestBody com.maspower.model.Activity activity) {
+    public ResponseEntity<ActivityResponseDTO> create(@Valid @RequestBody ActivityRequestDTO dto) {
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(ActivityMapper.toDTO(activityService.save(activity)));
+                .body(ActivityMapper.toDTO(activityService.save(dto)));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ActivityResponseDTO> update(@PathVariable Long id, @Valid @RequestBody com.maspower.model.Activity activity) {
-        return ResponseEntity.ok(ActivityMapper.toDTO(activityService.update(id, activity)));
+    public ResponseEntity<ActivityResponseDTO> update(@PathVariable Long id,
+                                                      @Valid @RequestBody ActivityRequestDTO dto) {
+        return ResponseEntity.ok(ActivityMapper.toDTO(activityService.update(id, dto)));
     }
 
     @DeleteMapping("/{id}")
@@ -56,12 +57,14 @@ public class ActivityController {
     }
 
     @PostMapping("/{activityId}/enroll/{userId}")
-    public ResponseEntity<ActivityResponseDTO> enroll(@PathVariable Long activityId, @PathVariable Long userId) {
+    public ResponseEntity<ActivityResponseDTO> enroll(@PathVariable Long activityId,
+                                                      @PathVariable Long userId) {
         return ResponseEntity.ok(ActivityMapper.toDTO(activityService.enrollUser(activityId, userId)));
     }
 
     @DeleteMapping("/{activityId}/unenroll/{userId}")
-    public ResponseEntity<ActivityResponseDTO> unenroll(@PathVariable Long activityId, @PathVariable Long userId) {
+    public ResponseEntity<ActivityResponseDTO> unenroll(@PathVariable Long activityId,
+                                                        @PathVariable Long userId) {
         return ResponseEntity.ok(ActivityMapper.toDTO(activityService.unenrollUser(activityId, userId)));
     }
 }
