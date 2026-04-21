@@ -5,34 +5,34 @@ import com.maspower.model.User;
 public class UserMapper {
 
     public static UserResponseDTO toDTO(User user) {
-        UserResponseDTO dto = new UserResponseDTO();
-        dto.setId(user.getId());
-        dto.setName(user.getName());
-        dto.setSurname(user.getSurname());
-        dto.setDni(user.getDni());
-        dto.setRegistrationYear(user.getRegistrationYear());
-        dto.setActive(user.isActive());
-        dto.setImageUrl(user.getImageUrl());
-        return dto;
+        return new UserResponseDTO(
+                user.getId(),
+                user.getName(),
+                user.getSurname(),
+                user.getDni(),
+                user.getRegistrationYear(),
+                user.isActive(),
+                user.getImageUrl()
+        );
     }
 
     public static User toEntity(UserRequestDTO dto) {
         User user = new User();
-        user.setName(dto.getName());
-        user.setSurname(dto.getSurname());
-        user.setDni(dto.getDni());
-        user.setRegistrationYear(dto.getRegistrationYear());
+        user.setName(dto.name());
+        user.setSurname(dto.surname());
+        user.setDni(dto.dni());
+        user.setRegistrationYear(dto.registrationYear());
         user.setActive(dto.isActive());
-        user.setImageUrl(dto.getImageUrl());
+        user.setImageUrl(dto.imageUrl());
         return user;
     }
 
     public static void updateEntity(User existing, UserRequestDTO dto) {
-        existing.setName(dto.getName());
-        existing.setSurname(dto.getSurname());
-        existing.setDni(dto.getDni());
-        existing.setRegistrationYear(dto.getRegistrationYear());
+        existing.setName(dto.name());
+        existing.setSurname(dto.surname());
+        existing.setDni(dto.dni());
+        existing.setRegistrationYear(dto.registrationYear());
         existing.setActive(dto.isActive());
-        existing.setImageUrl(dto.getImageUrl());
+        existing.setImageUrl(dto.imageUrl());
     }
 }

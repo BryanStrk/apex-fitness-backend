@@ -1,12 +1,9 @@
 package com.maspower.dto;
 
-import lombok.Data;
-
-@Data
-public class UserSummaryDTO {
-    private Long id;
-    private String name;
-    private String surname;
-    private String dni;
-    private boolean isActive;
-}
+public record UserSummaryDTO(
+        Long id,
+        String name,
+        String surname,
+        String dni,
+        boolean isActive
+) {}

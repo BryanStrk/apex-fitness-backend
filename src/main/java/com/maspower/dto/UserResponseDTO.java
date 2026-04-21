@@ -1,14 +1,11 @@
 package com.maspower.dto;
 
-import lombok.Data;
-
-@Data
-public class UserResponseDTO {
-    private Long id;
-    private String name;
-    private String surname;
-    private String dni;
-    private int registrationYear;
-    private boolean isActive;
-    private String imageUrl;
-}
+public record UserResponseDTO(
+        Long id,
+        String name,
+        String surname,
+        String dni,
+        int registrationYear,
+        boolean isActive,
+        String imageUrl
+) {}
