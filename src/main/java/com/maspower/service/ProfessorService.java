@@ -1,5 +1,7 @@
 package com.maspower.service;
 
+import com.maspower.dto.ProfessorMapper;
+import com.maspower.dto.ProfessorRequestDTO;
 import com.maspower.exception.ResourceNotFoundException;
 import com.maspower.model.Professor;
 import com.maspower.repository.ProfessorRepository;
@@ -23,17 +25,14 @@ public class ProfessorService {
                 .orElseThrow(() -> new ResourceNotFoundException("Professor not found with id: " + id));
     }
 
-    public Professor save(Professor professor) {
+    public Professor save(ProfessorRequestDTO dto) {
+        Professor professor = ProfessorMapper.toEntity(dto);
         return professorRepository.save(professor);
     }
 
-    public Professor update(Long id, Professor professor) {
+    public Professor update(Long id, ProfessorRequestDTO dto) {
         Professor existing = findById(id);
-        existing.setName(professor.getName());
-        existing.setDni(professor.getDni());
-        existing.setHiringYear(professor.getHiringYear());
-        existing.setActive(professor.isActive());
-        existing.setImageUrl(professor.getImageUrl());
+        ProfessorMapper.updateEntity(existing, dto);
         return professorRepository.save(existing);
     }
 
