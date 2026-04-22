@@ -2,6 +2,8 @@ package com.apexfitness.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 
 @Entity
 @Table(name = "users")
@@ -38,4 +40,8 @@ public class User {
 
     @Column(name = "image_url")
     private String imageUrl;
+    
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role", nullable = false)
+    private Role role = Role.CLIENT;
 }
