@@ -1,5 +1,7 @@
 package com.apexfitness.dto;
 
+import com.apexfitness.model.Role;
+
 public record UserResponseDTO(
         Long id,
         String name,
@@ -7,5 +9,6 @@ public record UserResponseDTO(
         String dni,
         int registrationYear,
         boolean isActive,
-        String imageUrl
+        String imageUrl,
+        Role role
 ) {}

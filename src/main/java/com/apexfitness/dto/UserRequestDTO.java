@@ -1,5 +1,6 @@
 package com.apexfitness.dto;
 
+import com.apexfitness.model.Role;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 
@@ -18,5 +19,7 @@ public record UserRequestDTO(
 
         boolean isActive,
 
-        String imageUrl
+        String imageUrl,
+
+        Role role
 ) {}
