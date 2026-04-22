@@ -54,9 +54,8 @@ public class DataLoader implements CommandLineRunner {
         marcus = professorRepository.save(marcus);
 
         log.info("Created default coach: {}", marcus.getName());
-
-        // ═══════════════════════════════════════════════════
-        // 2. Crear un usuario de prueba
+// ═══════════════════════════════════════════════════
+        // 2. Crear un usuario cliente de prueba
         // ═══════════════════════════════════════════════════
         User demoUser = new User();
         demoUser.setName("John");
@@ -65,10 +64,27 @@ public class DataLoader implements CommandLineRunner {
         demoUser.setRegistrationYear(2024);
         demoUser.setActive(true);
         demoUser.setImageUrl(null);
+        demoUser.setRole(Role.CLIENT);
         demoUser = userRepository.save(demoUser);
 
-        log.info("Created demo user: {} {}", demoUser.getName(), demoUser.getSurname());
+        log.info("Created demo client user: {} {} (role: {})",
+                demoUser.getName(), demoUser.getSurname(), demoUser.getRole());
 
+        // ═══════════════════════════════════════════════════
+        // 2b. Crear un usuario admin de prueba
+        // ═══════════════════════════════════════════════════
+        User adminUser = new User();
+        adminUser.setName("Sarah");
+        adminUser.setSurname("Admin");
+        adminUser.setDni("00000002A");
+        adminUser.setRegistrationYear(2023);
+        adminUser.setActive(true);
+        adminUser.setImageUrl(null);
+        adminUser.setRole(Role.ADMIN);
+        adminUser = userRepository.save(adminUser);
+
+        log.info("Created admin user: {} {} (role: {})",
+                adminUser.getName(), adminUser.getSurname(), adminUser.getRole());
         // ═══════════════════════════════════════════════════
         // 3. Crear los 8 workouts del catálogo
         // ═══════════════════════════════════════════════════
